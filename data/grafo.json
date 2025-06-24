@@ -1,0 +1,108 @@
+{
+  "Patrocínio": {
+    "Coromandel": 50,
+    "Monte Carmelo": 70,
+    "Serra do Salitre": 50,
+    "Perdizes": 90,
+    "Araxá": 110,
+    "Ibiá": 95
+  },
+  "Coromandel": {
+    "Patrocínio": 50,
+    "Monte Carmelo": 60,
+    "Guarda-Mor": 75
+  },
+  "Monte Carmelo": {
+    "Patrocínio": 70,
+    "Coromandel": 60,
+    "Estrela do Sul": 55,
+    "Indianópolis": 60
+  },
+  "Serra do Salitre": {
+    "Patrocínio": 50,
+    "Perdizes": 60
+  },
+  "Perdizes": {
+    "Serra do Salitre": 60,
+    "Patrocínio": 90,
+    "Araxá": 65
+  },
+  "Araxá": {
+    "Perdizes": 65,
+    "Patrocínio": 110,
+    "Ibiá": 45
+  },
+  "Ibiá": {
+    "Araxá": 45,
+    "Patrocínio": 95,
+    "Campos Altos": 60
+  },
+  "Campos Altos": {
+    "Ibiá": 60,
+    "Santa Juliana": 80
+  },
+  "Santa Juliana": {
+    "Campos Altos": 80,
+    "Nova Ponte": 65
+  },
+  "Nova Ponte": {
+    "Santa Juliana": 65,
+    "Indianópolis": 65
+  },
+  "Indianópolis": {
+    "Nova Ponte": 65,
+    "Monte Carmelo": 60,
+    "Estrela do Sul": 70
+  },
+  "Estrela do Sul": {
+    "Monte Carmelo": 55,
+    "Indianópolis": 70,
+    "Guarda-Mor": 85
+  },
+  "Guarda-Mor": {
+    "Estrela do Sul": 85,
+    "Coromandel": 75,
+    "Lagamar": 60
+  },
+  "Lagamar": {
+    "Guarda-Mor": 60,
+    "Presidente Olegário": 80
+  },
+  "Presidente Olegário": {
+    "Lagamar": 80,
+    "Patos de Minas": 45
+  },
+  "Patos de Minas": {
+    "Presidente Olegário": 45,
+    "Lagoa Formosa": 15,
+    "Varjão de Minas": 30,
+    "Rio Paranaíba": 80
+  },
+  "Lagoa Formosa": {
+    "Patos de Minas": 15,
+    "Carmo do Paranaíba": 25
+  },
+  "Varjão de Minas": {
+    "Patos de Minas": 30
+  },
+  "Rio Paranaíba": {
+    "Patos de Minas": 80,
+    "São Gotardo": 50
+  },
+  "São Gotardo": {
+    "Rio Paranaíba": 50,
+    "Matutina": 40
+  },
+  "Matutina": {
+    "São Gotardo": 40,
+    "Tiros": 30
+  },
+  "Tiros": {
+    "Matutina": 30,
+    "Carmo do Paranaíba": 60
+  },
+  "Carmo do Paranaíba": {
+    "Tiros": 60,
+    "Lagoa Formosa": 25
+  }
+}
