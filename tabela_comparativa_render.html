@@ -1,0 +1,79 @@
+
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Tabela Comparativa - ACO e GA</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 30px;
+                background-color: #f9f9f9;
+            }
+            h2, h3 {
+                text-align: center;
+                margin-top: 40px;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                background-color: white;
+                box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            }
+            th, td {
+                border: 1px solid #ccc;
+                padding: 10px 15px;
+                text-align: center;
+            }
+            th {
+                background-color: #f2f2f2;
+                font-weight: bold;
+            }
+            tr:hover {
+                background-color: #f1f1f1;
+            }
+            img {
+                display: block;
+                margin: 40px auto;
+                max-width: 90%;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Tabela Comparativa - ACO x Algoritmo Genético</h2>
+        <table>
+            <tr>
+                <th>Algoritmo</th>
+                <th>Distância Base</th>
+                <th>Custo Extra</th>
+                <th>Custo Total</th>
+                <th>Tempo Execução (s)</th>
+                <th>Iterações/Formigas</th>
+                <th>Melhor Rota</th>
+            </tr>
+    
+        <tr>
+            <td>ACO</td>
+            <td>1545</td>
+            <td>0</td>
+            <td>1545</td>
+            <td>1.05</td>
+            <td>100</td>
+            <td>Patrocínio → Serra do Salitre → Perdizes → Araxá → Ibiá → Campos Altos → Santa Juliana → Nova Ponte → Indianópolis → Monte Carmelo → Estrela do Sul → Presidente Olegário → Patos de Minas → Lagoa Formosa → Carmo do Paranaíba → Tiros → Matutina → São Gotardo → Rio Paranaíba → Varjão de Minas → Lagamar → Guarda-Mor → Coromandel → Patrocínio</td>
+        </tr>
+        
+        <tr>
+            <td>Genético</td>
+            <td>1815</td>
+            <td>0</td>
+            <td>1815</td>
+            <td>0.08</td>
+            <td>100</td>
+            <td>Patrocínio → Presidente Olegário → Lagoa Formosa → Carmo do Paranaíba → Tiros → Matutina → São Gotardo → Rio Paranaíba → Patos de Minas → Varjão de Minas → Lagamar → Guarda-Mor → Estrela do Sul → Indianópolis → Nova Ponte → Santa Juliana → Campos Altos → Ibiá → Araxá → Coromandel → Monte Carmelo → Serra do Salitre → Perdizes → Patrocínio</td>
+        </tr>
+        
+        </table>
+        <h3>Gráfico Comparativo</h3>
+        <img src="grafico_comparativo.png" alt="Gráfico Comparativo">
+    </body>
+    </html>
+    

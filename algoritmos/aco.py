@@ -1,9 +1,8 @@
 import random
 import time
 
-
 class ACO:
-    def __init__(self, grafo, num_formigas=20, num_iteracoes=100, alfa=1.0, beta=5.0, rho=0.5, q=100):
+    def __init__(self, grafo, num_formigas=50, num_iteracoes=100, alfa=1.0, beta=5.0, rho=0.5, q=100):
         self.grafo = grafo
         self.num_formigas = num_formigas
         self.num_iteracoes = num_iteracoes
@@ -13,11 +12,10 @@ class ACO:
         self.q = q        # Quantidade de feromônio depositado
 
         # Inicializar feromônio nas arestas existentes
-        self.feromonio = {}
-        for cidade in grafo:
-            self.feromonio[cidade] = {}
-            for vizinho in grafo[cidade]:
-                self.feromonio[cidade][vizinho] = 1.0  # Inicializa com 1.0
+        self.feromonio = {
+            cidade: {vizinho: 1.0 for vizinho in grafo[cidade]}
+            for cidade in grafo
+        }
 
     def escolher_proxima(self, atual, visitados):
         vizinhos = self.grafo[atual]
@@ -47,6 +45,8 @@ class ACO:
     def executar(self, origem="Patrocínio"):
         melhor_rota = None
         melhor_distancia = float('inf')
+        todas_rotas_gerais = []
+
         inicio = time.time()
 
         for iteracao in range(self.num_iteracoes):
@@ -59,9 +59,8 @@ class ACO:
                     if proxima is None:
                         break
                     rota.append(proxima)
-                rota.append(origem)  # Retorna pra cidade inicial
+                rota.append(origem)
 
-                # Calcular distância da rota
                 distancia = 0
                 for i in range(len(rota) - 1):
                     cidade = rota[i]
@@ -69,9 +68,10 @@ class ACO:
                     if destino in self.grafo.get(cidade, {}):
                         distancia += self.grafo[cidade][destino]
                     else:
-                        distancia += 9999  # Penalidade pra conexão inexistente
+                        distancia += 9999
 
                 todas_rotas.append((rota, distancia))
+                todas_rotas_gerais.append((rota, distancia))
 
                 if distancia < melhor_distancia:
                     melhor_rota = rota
@@ -82,7 +82,7 @@ class ACO:
                 for vizinho in self.feromonio[cidade]:
                     self.feromonio[cidade][vizinho] *= (1 - self.rho)
 
-            # Depósito de feromônio nas rotas encontradas
+            # Depósito de feromônio
             for rota, distancia in todas_rotas:
                 for i in range(len(rota) - 1):
                     cidade = rota[i]
@@ -95,8 +95,18 @@ class ACO:
         fim = time.time()
         tempo_execucao = fim - inicio
 
+        # Obter as 3 melhores rotas únicas
+        rotas_unicas = {}
+        for rota, dist in todas_rotas_gerais:
+            chave = tuple(rota)
+            if chave not in rotas_unicas or dist < rotas_unicas[chave]:
+                rotas_unicas[chave] = dist
+
+        top3 = sorted(rotas_unicas.items(), key=lambda x: x[1])[:3]
+
         return {
-            "melhor_rota": melhor_rota,
-            "distancia": melhor_distancia,
-            "tempo": tempo_execucao
+            "melhor_rota": top3[0][0],
+            "distancia": top3[0][1],
+            "tempo": tempo_execucao,
+            "top3_rotas": [rota for rota, _ in top3]
         }

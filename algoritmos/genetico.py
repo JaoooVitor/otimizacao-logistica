@@ -3,26 +3,23 @@ import time
 
 
 class AlgoritmoGenetico:
-    def __init__(self, grafo, tamanho_populacao=100, taxa_mutacao=0.01, num_geracoes=500, origem="Patrocínio"):
+    def __init__(self, grafo, tamanho_populacao=50, taxa_mutacao=0.01, num_geracoes=100, origem="Patrocínio"):
         self.grafo = grafo
         self.tamanho_populacao = tamanho_populacao
         self.taxa_mutacao = taxa_mutacao
         self.num_geracoes = num_geracoes
         self.origem = origem
         self.cidades = list(grafo.keys())
-        self.cidades.remove(self.origem)  # Remove a origem da lista de cidades para sortear
+        self.cidades.remove(self.origem)
 
-    # 🔥 Gera uma rota aleatória sempre começando e terminando na origem
     def criar_rota(self):
         rota = self.cidades.copy()
         random.shuffle(rota)
         return [self.origem] + rota + [self.origem]
 
-    # Gera a população inicial
     def criar_populacao(self):
         return [self.criar_rota() for _ in range(self.tamanho_populacao)]
 
-    # Calcula a distância total da rota
     def calcular_distancia(self, rota):
         distancia = 0
         for i in range(len(rota) - 1):
@@ -31,15 +28,12 @@ class AlgoritmoGenetico:
             distancia += self.grafo[origem][destino]
         return distancia
 
-    # Ordena a população pela menor distância
     def rankear_rotas(self, populacao):
         return sorted(populacao, key=lambda x: self.calcular_distancia(x))
 
-    # Seleção dos melhores (elitismo)
     def selecao(self, populacao_rankeada):
-        return populacao_rankeada[:int(0.2 * self.tamanho_populacao)]  # Top 20%
+        return populacao_rankeada[:int(0.2 * self.tamanho_populacao)]
 
-    # Crossover (Order Crossover - OX) mantendo a origem fixa
     def crossover(self, pai1, pai2):
         pai1_meio = pai1[1:-1]
         pai2_meio = pai2[1:-1]
@@ -53,7 +47,6 @@ class AlgoritmoGenetico:
         filho = [self.origem] + filho_p2[:start] + filho_p1 + filho_p2[start:] + [self.origem]
         return filho
 
-    # Mutação (troca aleatória) preservando a origem no início e fim
     def mutacao(self, rota):
         rota_meio = rota[1:-1]
         for i in range(len(rota_meio)):
@@ -62,7 +55,6 @@ class AlgoritmoGenetico:
                 rota_meio[i], rota_meio[j] = rota_meio[j], rota_meio[i]
         return [self.origem] + rota_meio + [self.origem]
 
-    # Gera a próxima geração
     def gerar_nova_geracao(self, populacao_atual):
         populacao_rankeada = self.rankear_rotas(populacao_atual)
         elite = self.selecao(populacao_rankeada)
@@ -78,19 +70,20 @@ class AlgoritmoGenetico:
         nova_geracao = elite + filhos
         return nova_geracao
 
-    # Executa o algoritmo genético
     def executar(self):
         inicio = time.time()
 
         populacao = self.criar_populacao()
         melhor_rota = None
         melhor_distancia = float('inf')
+        todas_rotas = []
 
         for geracao in range(self.num_geracoes):
             populacao = self.gerar_nova_geracao(populacao)
             populacao_rankeada = self.rankear_rotas(populacao)
 
             distancia_atual = self.calcular_distancia(populacao_rankeada[0])
+            todas_rotas.extend([(ind, self.calcular_distancia(ind)) for ind in populacao_rankeada])
 
             if distancia_atual < melhor_distancia:
                 melhor_rota = populacao_rankeada[0]
@@ -101,8 +94,18 @@ class AlgoritmoGenetico:
         fim = time.time()
         tempo_execucao = fim - inicio
 
+        # Filtrar 3 melhores rotas únicas
+        rotas_unicas = {}
+        for rota, dist in todas_rotas:
+            chave = tuple(rota)
+            if chave not in rotas_unicas or dist < rotas_unicas[chave]:
+                rotas_unicas[chave] = dist
+
+        top3 = sorted(rotas_unicas.items(), key=lambda x: x[1])[:3]
+
         return {
-            "melhor_rota": melhor_rota,
-            "distancia": melhor_distancia,
-            "tempo": tempo_execucao
+            "melhor_rota": top3[0][0],
+            "distancia": top3[0][1],
+            "tempo": tempo_execucao,
+            "top3_rotas": [rota for rota, _ in top3]
         }
