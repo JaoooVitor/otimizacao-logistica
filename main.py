@@ -167,11 +167,11 @@ def main():
     grafo_completo = gerar_grafo_completo(grafo_com_custos)
 
     print("\n>>> Executando ACO...")
-    aco = ACO(grafo_completo, num_formigas=30, num_iteracoes=100)
+    aco = ACO(grafo_completo, num_formigas=50, num_iteracoes=500)
     resultado_aco = aco.executar()
 
     print("\n>>> Executando Algoritmo Genético...")
-    ga = AlgoritmoGenetico(grafo_completo, tamanho_populacao=30, taxa_mutacao=0.02, num_geracoes=100)
+    ga = AlgoritmoGenetico(grafo_completo, tamanho_populacao=300, taxa_mutacao=0.02, num_geracoes=500)
     resultado_ga = ga.executar()
 
     def calcular_custo_extra(rota):
@@ -186,8 +186,8 @@ def main():
 
     resultados = []
     for nome_alg, resultado, iteracoes in [
-        ("ACO", resultado_aco, 100),
-        ("Genético", resultado_ga, 100)
+        ("ACO", resultado_aco, 200),
+        ("Genético", resultado_ga, 500)
     ]:
         custo_extra = calcular_custo_extra(resultado['melhor_rota'])
         distancia_base = resultado["distancia"] - custo_extra

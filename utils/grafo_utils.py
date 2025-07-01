@@ -3,14 +3,12 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
-# Carregar grafo
 def carregar_grafo(caminho_arquivo):
     with open(caminho_arquivo, 'r', encoding='utf-8') as arquivo:
         grafo = json.load(arquivo)
     return grafo
 
 
-# Tornar grafo bidirecional
 def tornar_grafo_bidirecional(grafo):
     grafo_bidirecional = {}
     for cidade, vizinhos in grafo.items():
@@ -24,7 +22,6 @@ def tornar_grafo_bidirecional(grafo):
     return grafo_bidirecional
 
 
-# Aplicar restrições (bloquear estradas)
 def aplicar_restricoes(grafo, estradas_bloqueadas):
     grafo_restrito = json.loads(json.dumps(grafo))  # Copia profunda
     for cidade1, cidade2 in estradas_bloqueadas:
@@ -35,7 +32,6 @@ def aplicar_restricoes(grafo, estradas_bloqueadas):
     return grafo_restrito
 
 
-# Aplicar custos extras nas estradas
 def aplicar_custos_extras(grafo, custos_extras):
     grafo_modificado = json.loads(json.dumps(grafo))  # Copia profunda
     for cidade1, cidade2, custo in custos_extras:
@@ -46,7 +42,6 @@ def aplicar_custos_extras(grafo, custos_extras):
     return grafo_modificado
 
 
-# Desenhar grafo (opcional)
 def desenhar_grafo(grafo):
     G = nx.Graph()
 

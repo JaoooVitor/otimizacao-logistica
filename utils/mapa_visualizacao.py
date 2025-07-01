@@ -16,7 +16,6 @@ def gerar_mapa_comparativo(rota_aco, rota_ga, estradas_bloqueadas, nome_arquivo=
     ordem_aco = {cidade: idx + 1 for idx, cidade in enumerate(rota_aco)}
     ordem_ga = {cidade: idx + 1 for idx, cidade in enumerate(rota_ga)}
 
-    # 🚧 Estradas bloqueadas
     for cidade1, cidade2 in estradas_bloqueadas:
         try:
             ponto1 = coordenadas[cidade1]
@@ -29,9 +28,8 @@ def gerar_mapa_comparativo(rota_aco, rota_ga, estradas_bloqueadas, nome_arquivo=
                 tooltip=f"Bloqueado: {cidade1} ↔ {cidade2}"
             ).add_to(mapa)
         except:
-            print(f"⚠️ Erro ao desenhar estrada bloqueada entre {cidade1} e {cidade2}")
+            print(f"Erro ao desenhar estrada bloqueada entre {cidade1} e {cidade2}")
 
-    # 🚗 Desenhar rotas com offset
     rotas = [rota_aco, rota_ga]
     cores = [cor_aco, cor_ga]
     nomes = ["ACO", "GA"]
@@ -48,7 +46,6 @@ def gerar_mapa_comparativo(rota_aco, rota_ga, estradas_bloqueadas, nome_arquivo=
             tooltip=f'Rota {nome}'
         ).add_to(mapa)
 
-    # 📍 Marcadores com popup de ordens
     for cidade, (lat, lon) in coordenadas.items():
         popup_text = f"<b>{cidade}</b><br>"
         popup_text += f"Ordem ACO: {ordem_aco.get(cidade, 'N/A')}<br>"
@@ -65,7 +62,6 @@ def gerar_mapa_comparativo(rota_aco, rota_ga, estradas_bloqueadas, nome_arquivo=
             )
         ).add_to(mapa)
 
-    # 🗺️ Legenda
     legenda_html = '''
      <div style="
      position: fixed;
@@ -91,7 +87,6 @@ def gerar_mapa_comparativo(rota_aco, rota_ga, estradas_bloqueadas, nome_arquivo=
     '''
     mapa.get_root().html.add_child(folium.Element(legenda_html))
 
-    # 📊 Tabela Comparativa
     df = pd.read_csv("tabela_comparativa.csv")
     tabela_html = """
     <div style="
@@ -130,13 +125,12 @@ def gerar_mapa_comparativo(rota_aco, rota_ga, estradas_bloqueadas, nome_arquivo=
     tabela_html += "</table></div>"
     mapa.get_root().html.add_child(folium.Element(tabela_html))
     mapa.save(nome_arquivo)
-    print(f"✔️ Mapa salvo como {nome_arquivo}")
+    print(f"Mapa salvo como {nome_arquivo}")
 
 def gerar_mapa_multirotas(rotas, estradas_bloqueadas, nome_arquivo, algoritmo):
     mapa = folium.Map(location=[-18.9, -47.2], zoom_start=8)
     cores = ['red', 'blue', 'green']
 
-    # 🚧 Estradas bloqueadas
     for cidade1, cidade2 in estradas_bloqueadas:
         try:
             ponto1 = coordenadas[cidade1]
@@ -149,9 +143,8 @@ def gerar_mapa_multirotas(rotas, estradas_bloqueadas, nome_arquivo, algoritmo):
                 tooltip=f"Bloqueado: {cidade1} ↔ {cidade2}"
             ).add_to(mapa)
         except:
-            print(f"⚠️ Erro ao desenhar estrada bloqueada entre {cidade1} e {cidade2}")
+            print(f"Erro ao desenhar estrada bloqueada entre {cidade1} e {cidade2}")
 
-    # 🧭 Rotas com offset visual
     for idx, rota in enumerate(rotas):
         pontos_originais = [coordenadas[cidade] for cidade in rota]
         offset = 0.002 * (idx - 1)  # -0.002, 0, 0.002
@@ -164,7 +157,6 @@ def gerar_mapa_multirotas(rotas, estradas_bloqueadas, nome_arquivo, algoritmo):
             tooltip=f"{algoritmo} - Rota #{idx + 1}"
         ).add_to(mapa)
 
-    # 📍 Marcadores
     for cidade, (lat, lon) in coordenadas.items():
         folium.Marker(
             location=(lat, lon),
@@ -199,4 +191,4 @@ def gerar_mapa_multirotas(rotas, estradas_bloqueadas, nome_arquivo, algoritmo):
     '''
     mapa.get_root().html.add_child(folium.Element(legenda_html))
     mapa.save(nome_arquivo)
-    print(f"✔️ Mapa salvo como {nome_arquivo}")
+    print(f"Mapa salvo como {nome_arquivo}")
