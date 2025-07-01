@@ -23,7 +23,7 @@ def tornar_grafo_bidirecional(grafo):
 
 
 def aplicar_restricoes(grafo, estradas_bloqueadas):
-    grafo_restrito = json.loads(json.dumps(grafo))  # Copia profunda
+    grafo_restrito = json.loads(json.dumps(grafo))  
     for cidade1, cidade2 in estradas_bloqueadas:
         if cidade2 in grafo_restrito.get(cidade1, {}):
             del grafo_restrito[cidade1][cidade2]
@@ -33,7 +33,7 @@ def aplicar_restricoes(grafo, estradas_bloqueadas):
 
 
 def aplicar_custos_extras(grafo, custos_extras):
-    grafo_modificado = json.loads(json.dumps(grafo))  # Copia profunda
+    grafo_modificado = json.loads(json.dumps(grafo))  
     for cidade1, cidade2, custo in custos_extras:
         if cidade2 in grafo_modificado.get(cidade1, {}):
             grafo_modificado[cidade1][cidade2] += custo

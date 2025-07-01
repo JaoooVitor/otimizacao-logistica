@@ -94,7 +94,6 @@ class AlgoritmoGenetico:
         fim = time.time()
         tempo_execucao = fim - inicio
 
-        # Filtrar 3 melhores rotas únicas
         rotas_unicas = {}
         for rota, dist in todas_rotas:
             chave = tuple(rota)

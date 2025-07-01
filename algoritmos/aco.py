@@ -6,12 +6,11 @@ class ACO:
         self.grafo = grafo
         self.num_formigas = num_formigas
         self.num_iteracoes = num_iteracoes
-        self.alfa = alfa  # Peso do feromônio
-        self.beta = beta  # Peso da distância (heurística)
-        self.rho = rho    # Taxa de evaporação
-        self.q = q        # Quantidade de feromônio depositado
+        self.alfa = alfa  
+        self.beta = beta  
+        self.rho = rho    
+        self.q = q        
 
-        # Inicializar feromônio nas arestas existentes
         self.feromonio = {
             cidade: {vizinho: 1.0 for vizinho in grafo[cidade]}
             for cidade in grafo
@@ -77,12 +76,10 @@ class ACO:
                     melhor_rota = rota
                     melhor_distancia = distancia
 
-            # Evaporação do feromônio
             for cidade in self.feromonio:
                 for vizinho in self.feromonio[cidade]:
                     self.feromonio[cidade][vizinho] *= (1 - self.rho)
 
-            # Depósito de feromônio
             for rota, distancia in todas_rotas:
                 for i in range(len(rota) - 1):
                     cidade = rota[i]
@@ -95,7 +92,6 @@ class ACO:
         fim = time.time()
         tempo_execucao = fim - inicio
 
-        # Obter as 3 melhores rotas únicas
         rotas_unicas = {}
         for rota, dist in todas_rotas_gerais:
             chave = tuple(rota)

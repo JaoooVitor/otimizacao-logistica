@@ -141,9 +141,9 @@ def main():
             cidade1 = cidade1.strip().title()
             cidade2 = cidade2.strip().title()
             estradas_bloqueadas.append((cidade1, cidade2))
-            print(f"✅ Estrada {cidade1} ↔ {cidade2} bloqueada!")
+            print(f"Estrada {cidade1} ↔ {cidade2} bloqueada!")
         except:
-            print("❌ Formato inválido. Use o formato: Cidade1-Cidade2")
+            print("Formato inválido. Use o formato: Cidade1-Cidade2")
 
     print("\nInforme custos extras no formato: Cidade1-Cidade2-Custo")
     print("Digite 'ok' quando terminar.\n")
@@ -158,9 +158,9 @@ def main():
             cidade2 = cidade2.strip().title()
             custo = float(custo.strip())
             custos_extras.append((cidade1, cidade2, custo))
-            print(f"💰 Custo extra de {custo} aplicado na estrada {cidade1} ↔ {cidade2}")
+            print(f"Custo extra de {custo} aplicado na estrada {cidade1} ↔ {cidade2}")
         except:
-            print("❌ Formato inválido. Use: Cidade1-Cidade2-Custo")
+            print("Formato inválido. Use: Cidade1-Cidade2-Custo")
 
     grafo_restrito = aplicar_restricoes(grafo, estradas_bloqueadas)
     grafo_com_custos = aplicar_custos_extras(grafo_restrito, custos_extras)
